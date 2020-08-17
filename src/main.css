@@ -6,7 +6,7 @@
 }
 body{
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     background-color: #3a3a3a;
 }
 .content_box{
@@ -41,6 +41,7 @@ body{
     filter: saturate(40%);
     transition: .2s;
     cursor: pointer;
+    user-select: none;
 }
 input[type="button"]:focus{
     outline: none;
