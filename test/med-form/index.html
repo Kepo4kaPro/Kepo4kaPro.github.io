@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ru" xmlns:v-on xmlns:v-bind xmlns:v-model>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Form</title>
+    <link rel="stylesheet" href="src/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="src/main.js"></script>
+</head>
+<body>
+    <div class="container" id="container">
+        <form action="#" class="content" v-on:submit.prevent="chenge_page(2)" v-bind:class="{ active: card_actve[0] }">
+            <h1>Новый клиент</h1>
+            <div class="inpu_block">
+                <div class="input_placeh">
+                    <label for="user_name"></label><input id="user_name" type="text" v-model="value.name" placeholder=" " pattern="[А-Я]{1}[а-я]{1,}\s[А-Я]{1}[а-я]{1,}|[А-Я]{1}[а-я]{1,}\s[А-Я]{1}[а-я]{1,}\s[А-Я]{1}[а-я]{1,}" required>
+                    <div class="placeholder">Фамилия Имя Отчество</div>
+                </div>
+                <div class="unite">
+                    <div class="input_placeh">
+                        <label for="user_birthday"></label><input id="user_birthday" placeholder=" " type="text" v-model="value.birthday" v-bind:max="today" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'" required>
+                        <div class="placeholder">Дата Рождения</div>
+                    </div>
+                    <div class="input_placeh">
+                        <label for="user_phone"></label><input id="user_phone" type="tel" placeholder=" " pattern="[^_]*" v-model="value.phone"  @input="check_mask('phone')" @focus="check_mask('phone')" @blur="check_blur_mask('phone')" required>
+                        <div class="placeholder">Номер телефона</div>
+                    </div>
+                </div>
+
+                <div class="chek_box" style="width: 228px;">
+                    <label for="chekbox">
+                        <p>Мужчина</p>
+                        <input id="chekbox" name="gender" type="radio" value="Мужской" v-model="value.gender" required checked>
+                        <div class="sheck_mask"></div>
+                    </label>
+                    <label for="chekbox1">
+                        <input id="chekbox1" name="gender" type="radio" value="Женсикй" v-model="value.gender">
+                        <div class="sheck_mask"></div>
+                        <p>Женщина</p>
+                    </label>
+                </div>
+            </div>
+            <div class="panel_bottom">
+                <input type="submit" value="Далее">
+            </div>
+        </form>
+        <form action="#" class="content" v-on:submit.prevent="chenge_page(3)" v-bind:class="{active: card_actve[1] }">
+            <h1>Группа</h1>
+            <div class="inpu_block">
+                <div class="input_placeh">
+                    <div class="group_mylti">
+                        <div class="chek_box" style="width: 228px;">
+                            <label for="group_vip">
+                                <p>VIP</p>
+                                <input id="group_vip" name="group" type="radio" v-model="value.group_klient.type" value="VIP" required>
+                                <div class="sheck_mask"></div>
+                            </label>
+                            <label for="group_problem">
+                                <p>Проблемные</p>
+                                <input id="group_problem" type="checkbox" v-model="value.group_klient.problem">
+                                <div class="sheck_mask"></div>
+                            </label>
+                            <label for="group_oms">
+                                <p>ОМС</p>
+                                <input id="group_oms" name="group" type="radio" v-model="value.group_klient.type" value="ОМС" checked>
+                                <div class="sheck_mask"></div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="placeholder">Группа</div>
+                </div>
+                <div class="input_placeh">
+                    <label>
+                        <select v-model="value.target_doct">
+                            <option disabled selected hidden>Не выбранно</option>
+                            <option value="Иванов" >Иванов</option>
+                            <option value="Захаров" >Захаров</option>
+                            <option value="Чернышева" >Чернышева</option>
+                        </select>
+                    </label>
+                    <div class="placeholder">Лечащий врач</div>
+                </div>
+                <div class="chek_box">
+                    <label for="chekbox_sms">
+                        <p>Не отправлять СМС</p>
+                        <input id="chekbox_sms" name="gender" type="checkbox" v-model="value.is_sub_sms" >
+                        <div class="sheck_mask"></div>
+                    </label>
+                </div>
+            </div>
+            <div class="panel_bottom">
+                <input type="button" value="Назад" v-on:click="chenge_page(1)">
+                <input type="submit" value="Далее">
+            </div>
+        </form>
+        <form action="#" class="content" v-on:submit.prevent="chenge_page(4)" v-bind:class="{active: card_actve[2] }">
+            <h1>Адрес</h1>
+            <div class="inpu_block">
+                <div class="input_placeh">
+                    <label for="user_county"></label><input id="user_county" type="text" placeholder=" " v-model="value.county" >
+                    <div class="placeholder">Страна</div>
+                </div>
+                <div class="unite">
+                    <div class="input_placeh">
+                        <label for="user_flatness"></label><input id="user_flatness" type="text" placeholder=" " v-model="value.flatness" >
+                        <div class="placeholder">Облость</div>
+                    </div>
+                    <div class="input_placeh">
+                        <label for="user_city"></label><input id="user_city" type="text" placeholder=" " required v-model="value.city" >
+                        <div class="placeholder">Город</div>
+                    </div>
+                    <div class="input_placeh">
+                        <label for="user_outside"></label><input id="user_outside" type="text" placeholder=" " v-model="value.outside" >
+                        <div class="placeholder">Улица</div>
+                    </div>
+                    <div class="input_placeh">
+                        <label for="user_home"></label><input id="user_home" type="text" placeholder=" " v-model="value.home" >
+                        <div class="placeholder">Дом</div>
+                    </div>
+                    <div class="input_placeh">
+                        <label for="user_index"></label><input id="user_index" type="tel" placeholder=" " pattern="[^_]*" v-model="value.index"  @input="check_mask('index')" @focus="check_mask('index')" @blur="check_blur_mask('index')">
+                        <div class="placeholder">Индекс</div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel_bottom">
+                <input type="button" value="Назад" v-on:click="chenge_page(2)">
+                <input type="submit" value="Далее">
+            </div>
+        </form>
+        <form action="#" class="content" v-on:submit.prevent="show_data" v-bind:class="{active: card_actve[3] }">
+            <h1>Документы</h1>
+            <div class="inpu_block">
+                <div class="input_placeh">
+                    <select id="user_typedocum" required v-model="value.docum_type" >
+                        <option value="" disabled selected hidden>Не выбранно</option>
+                        <option value="Паспорт" >Паспорт</option>
+                        <option value="Свидетельство о рождении" >Свидетельство о рождении</option>
+                        <option value="Вод. удостоверение" >Вод. удостоверение</option>
+                    </select>
+                    <div class="placeholder">Тип документа</div>
+                </div>
+                <div class="unite">
+                    <div class="input_placeh">
+                        <label for="user_numdocm"></label><input id="user_numdocm" type="tel" placeholder=" " pattern="[^_]*" v-model="value.seril"  @input="check_mask('seril')" @focus="check_mask('seril')" @blur="check_blur_mask('seril')">
+                        <div class="placeholder">Серия Номер</div>
+                    </div>
+                    <div class="input_placeh">
+                        <label for="user_datedocum"></label><input id="user_datedocum" placeholder=" " type="text" v-model="value.date_out" v-bind:max="today" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'" required>
+                        <div class="placeholder">Дата выдачи</div>
+                    </div>
+                </div>
+                <div class="input_placeh">
+                    <label for="user_orgdocum"></label><input id="user_orgdocum" type="text" placeholder=" " required v-model="value.org_out" >
+                    <div class="placeholder">Кем выдан</div>
+                </div>
+            </div>
+            <div class="panel_bottom">
+                <input type="button" value="Назад" v-on:click="chenge_page(2)">
+                <input type="submit" value="Создать">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
